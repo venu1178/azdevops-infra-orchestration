@@ -19,7 +19,7 @@ stages:
   - stage: 'Validate_${{ parameters.component }}'
     displayName: 'Validate - ${{ parameters.component }}'
     variables:
-      - template: env-np.yml
+      - template: env-dev-config.yml
     ${{ if eq(parameters.pool_type, 'MS_Hosted')) }}:
       pool:
         vmImage: 'ubuntu-latest'
@@ -28,13 +28,10 @@ stages:
     jobs:
       - template: validate.yml
         parameters:
-          terragrunt_codebase: ${{ parameters.terragrunt_codebase }}
+          terragrunt_codebase: ${{ parameters.codebase }}
           service_principal_identifier: ${{ parameters.service_principal_identifier }}
           pool_type: ${{ parameters.pool_type }}
-          terragrunt_log_level: ${{ parameters.terragrunt_log_level }}
+          terragrunt_log_level: ${{ parameters.log_level }}
           component: ${{ parameters.component }}
           buildSourceBranch: ${{ variables.buildSourceBranch }}
-          skipTrufflehogScan: ${{ parameters.skipTrufflehogScan }}
-          includeFoldersForTrufflehogScan: ${{ parameters.includeFoldersForTrufflehogScan }}
-          excludeFoldersForTrufflehogScan: ${{ parameters.excludeFoldersForTrufflehogScan }}
           environment : ${{parameters.environment}}
