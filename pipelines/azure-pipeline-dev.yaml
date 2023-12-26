@@ -1,0 +1,47 @@
+parameters:
+  - name: component
+    displayName: Component
+    type: string
+    default: 'NONE'
+    values:
+      - 'NONE'
+      - 'network'
+      - 'acr'
+      - 'aks'
+
+  - name: action
+    displayName: Action
+    type: string
+    default: 'Deploy'
+    values:
+      - 'Deploy'
+      - 'Destroy'
+
+  - name: logLevel
+    displayName: Log Level
+    type: string
+    default: 'info'
+    values:
+      - 'info'
+      - 'error'
+      - 'debug'
+      - 'warn'
+
+variables:
+  - group: INFRA_ORCHESTRATION
+  - name: pool_type
+    value : 'self_Hosted' #'MS_Hosted'
+  - name: service_principal_identifier
+    value: ''
+
+trigger: none
+
+stages: 
+  - template: ../pipeline-template/azure-pipeline-template.yml
+    parameters: 
+      codebase: '/terraform_demo/orchestration/component/${{parameters.component}}'
+      action: ${{ parameters.action }}
+      service_principal_identifier: ${{ variables.service_principal_identifier }}
+      component: "${{ replace(parameters.component, '-', '_') }}_HUB"
+      pool_type: ${{ variables.pool_type }}
+      terragrunt_log_level: ${{ parameters.terragrunt_log_level }}
