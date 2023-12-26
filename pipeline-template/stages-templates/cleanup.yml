@@ -1,0 +1,9 @@
+steps:
+  - task: DeleteFiles@1
+    displayName: Delete Build Files
+    condition: always()
+    inputs:
+      SourceFolder: $(Agent.BuildDirectory)/
+      Contents: '**/*'
+      RemoveSourceFolder: true
+      RemoveDotFiles: true

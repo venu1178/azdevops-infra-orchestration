@@ -1,0 +1,11 @@
+parameters:
+- name: component
+  type: string
+- name: pool_type
+  type: string
+- name: environment
+  type: string
+
+steps:
+- checkout: self
+- template: ./agent-config.yml

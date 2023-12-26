@@ -1,0 +1,6 @@
+steps:
+  - task: Bash@3
+    displayName: Print Environment Variables
+    inputs:
+      targetType: 'inline'
+      script: 'env | sort'

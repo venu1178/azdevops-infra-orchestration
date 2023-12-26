@@ -1,0 +1,35 @@
+variables:
+  - name: azureHubServiceConnection
+    value: 'cap_osb_manual'
+  - name: azureDeploymentSubscriptionServiceConnection
+    value: 'cap_osb_manual'
+  - name: backendServiceArm
+    value: 'cap_osb_manual'
+  - name: backendAzureRmResourceGroupName
+    value: rg_tfstate
+  - name: backendAzureRmStorageAccountName
+    value: venutfstate
+  - name: backendAzureRmContainerName
+    value: terraformstate
+  - name: agentPool
+    value: "prompt-pool"
+  - name: archetypesDir
+    value: 'archetypesCode'
+  - name: serviceCodeDir
+    value: 'serviceCode'
+  - name: isDeploymentBranch
+    value: 'false'
+  - ${{ if or(startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'), startsWith(variables['Build.SourceBranch'], 'refs/heads/hotfix/'), in(variables['Build.SourceBranchName'], 'main','release')) }}:
+      - name: isDeploymentBranch
+        value: 'true'
+  - name: buildSourceBranch
+    value: $(Build.SourceBranch)
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+      - name: buildSourceBranch
+        value: $(System.PullRequest.SourceBranch)
+  - name: componentName
+    value: $(Build.Repository.Name)
+  - name: location
+    value: 'uksouth'
+  - name: approver
+    value: 'DevApprover'
