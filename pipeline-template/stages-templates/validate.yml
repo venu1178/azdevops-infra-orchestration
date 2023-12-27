@@ -39,7 +39,7 @@ jobs:
   - task: Bash@3
     inputs:
       targetType: 'inline'
-      script: '/usr/local/bin/terragrunt validate'
+      script: 'terragrunt validate'
       workingDirectory: '$(Build.SourcesDirectory)/${{ parameters.codebase }}'
     displayName: 'Terragrunt Validate'
     env:
@@ -47,4 +47,4 @@ jobs:
       ARM_CLIENT_ID: $(${{ parameters.service_principal_identifier }}_CLIENT_ID)
       ARM_SUBSCRIPTION_ID: $(${{ parameters.service_principal_identifier }}_SUBSCRIPTION_ID)
       LOG_LEVEL: ${{ parameters.log_level }}
-  #- template: ./cleanup.yml
+  - template: ./cleanup.yml
