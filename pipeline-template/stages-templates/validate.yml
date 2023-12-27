@@ -32,7 +32,7 @@ jobs:
       pool_type: ${{ parameters.pool_type }}
       component: ${{ parameters.component }}
       environment: ${{parameters.environment}}
-  - template: ./print-env-variables.yaml
+  - template: ./print-env-variables.yml
     parameters:
       buildSourceBranch: ${{ parameters.buildSourceBranch }}
 
