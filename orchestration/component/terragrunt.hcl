@@ -3,7 +3,7 @@ locals {
   arm_subscription_id = get_env("ARM_SUBSCRIPTION_ID")
   arm_stacc_rg_name         = get_env("ARM_RG_NAME") 
   arm_stacc_name         = get_env("ARM_STACC_NAME")  
-  arm_container       = "terraformstate"
+  arm_container       = get_env("ARM_CONTAINER_NAME") 
   arm_tenant_id       = get_env("ARM_TENANT_ID") 
 }
 
@@ -24,7 +24,7 @@ remote_state {
     storage_account_name = local.arm_stacc_name
     container_name       = local.arm_container
     key = "${path_relative_to_include()}/${local.application}-orchestration.tfstate"
-    #sas_token            = get_env("ARM_SAS_TOKEN")
+    sas_token            = get_env("ARM_SAS_TOKEN")
     snapshot = true
   }
 }
