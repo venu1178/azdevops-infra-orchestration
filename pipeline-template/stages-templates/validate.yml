@@ -34,7 +34,7 @@ jobs:
       environment: ${{parameters.environment}}
   - template: ./print-env-variables.yaml
     parameters:
-    buildSourceBranch: ${{ parameters.buildSourceBranch }}
+      buildSourceBranch: ${{ parameters.buildSourceBranch }}
 
   - task: Bash@3
     inputs:
