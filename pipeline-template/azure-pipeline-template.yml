@@ -35,3 +35,26 @@ stages:
           component: ${{ parameters.component }}
           buildSourceBranch: ${{ variables.buildSourceBranch }}
           environment : ${{parameters.environment}}
+
+  - stage: 'Plan_${{ parameters.component }}'
+    displayName: 'Plan - ${{ parameters.component }}'
+    variables:
+      - template: env-dev-config.yml
+    ${{ if eq(parameters.pool_type, 'MS_Hosted') }}:
+      pool:
+        vmImage: 'ubuntu-latest'
+    ${{ else }}:
+      pool: ${{ variables.agentPool }}
+    jobs:
+      - template: ./stages-templates/plan.yml
+        parameters:
+          codebase: ${{ parameters.codebase }}
+          service_principal_identifier: ${{ parameters.service_principal_identifier }}
+          ${{ if eq(parameters.action, 'Deploy') }}:
+            plan_type: ''
+          ${{ if eq(parameters.action, 'Destroy') }}:
+            plan_type: '-destroy'
+          pool_type: ${{ parameters.pool_type }}
+          log_level: ${{ parameters.terragrunt_log_level }}
+          component: ${{ parameters.component }}
+          environment : ${{parameters.environment}}

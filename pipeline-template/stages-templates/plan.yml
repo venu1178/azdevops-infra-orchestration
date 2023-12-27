@@ -1,0 +1,49 @@
+parameters:
+- name: codebase
+  type: string
+- name: service_principal_identifier
+  type: string
+- name: plan_type
+  type: string
+- name: pool_type
+  type: string
+- name: log_level
+  type: string
+- name: component
+  type: string
+- name: environment
+  type: string
+  default: ''
+
+jobs:
+- job: Plan
+  steps:
+  - template: ../agent-config.yml
+    parameters:
+      pool_type: ${{ parameters.pool_type }}
+      component: ${{ parameters.component }}
+      environment: ${{parameters.environment}}
+
+  - template: ./print-env-variables.yaml
+
+  - task: Bash@3
+    displayName: "Terragrunt Plan"
+    inputs:
+      targetType: 'inline'
+      script: 'terragrunt plan ${{ parameters.plan_type }} -out=$(Build.SourcesDirectory)/${{ parameters.codebase }}/${{ parameters.component }}.tfplan'
+      workingDirectory: '$(Build.SourcesDirectory)/${{ parameters.codebase }}'
+    env:
+      ARM_CLIENT_SECRET: $(${{ parameters.service_principal_identifier }}_CLIENT_SECRET)
+      ARM_CLIENT_ID: $(${{ parameters.service_principal_identifier }}_CLIENT_ID)
+      ARM_SUBSCRIPTION_ID: $(${{ parameters.service_principal_identifier }}_SUBSCRIPTION_ID)
+      ARM_TENANT_ID: $(ARM_TENANT_ID)
+      
+  - task: PublishPipelineArtifact@1
+    condition: succeeded()
+    displayName: Publish Plan Results
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)/${{ parameters.codebase }}/${{ parameters.component }}.tfplan'
+      artifact: '${{ parameters.component }}'
+      publishLocation: 'pipeline'
+
+  - template: ./cleanup.yaml
