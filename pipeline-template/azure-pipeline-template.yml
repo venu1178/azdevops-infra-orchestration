@@ -26,7 +26,7 @@ stages:
     ${{ else }}:
       pool: ${{ variables.agentPool }}
     jobs:
-      - template: ./states-templates/validate.yml
+      - template: ./stages-templates/validate.yml
         parameters:
           codebase: ${{ parameters.codebase }}
           service_principal_identifier: ${{ parameters.service_principal_identifier }}
