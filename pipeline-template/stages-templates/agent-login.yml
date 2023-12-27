@@ -1,0 +1,6 @@
+steps:
+  - script: |
+      git config --global url."https://$SYSTEM_ACCESSTOKEN@dev.azure.com".insteadOf "https://dev.azure.com"
+    displayName: 'Repo Login with PAT token'
+    env:
+      SYSTEM_ACCESSTOKEN: $(PAT)
