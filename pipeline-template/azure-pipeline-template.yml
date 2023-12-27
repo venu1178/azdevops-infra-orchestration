@@ -26,12 +26,12 @@ stages:
     ${{ else }}:
       pool: ${{ variables.agentPool }}
     jobs:
-      - template: validate.yml
+      - template: ./states-templates/validate.yml
         parameters:
-          terragrunt_codebase: ${{ parameters.codebase }}
+          codebase: ${{ parameters.codebase }}
           service_principal_identifier: ${{ parameters.service_principal_identifier }}
           pool_type: ${{ parameters.pool_type }}
-          terragrunt_log_level: ${{ parameters.log_level }}
+          log_level: ${{ parameters.log_level }}
           component: ${{ parameters.component }}
           buildSourceBranch: ${{ variables.buildSourceBranch }}
           environment : ${{parameters.environment}}
