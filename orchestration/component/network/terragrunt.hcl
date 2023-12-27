@@ -13,7 +13,7 @@ terraform {
       "untaint"
     ]
     env_vars = {
-      ARM_SUBSCRIPTION_ID = local.env_config.subscriptions.prod_workloads[0].id
+      ARM_SUBSCRIPTION_ID = get_env("ARM_SUBSCRIPTION_ID")
     }
   }
 }
