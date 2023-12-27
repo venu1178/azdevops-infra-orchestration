@@ -47,4 +47,4 @@ jobs:
       ARM_CLIENT_ID: $(${{ parameters.service_principal_identifier }}_CLIENT_ID)
       ARM_SUBSCRIPTION_ID: $(${{ parameters.service_principal_identifier }}_SUBSCRIPTION_ID)
       LOG_LEVEL: ${{ parameters.log_level }}
-  - template: ./cleanup.yaml
+  - template: ./cleanup.yml
