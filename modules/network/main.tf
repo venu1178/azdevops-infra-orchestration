@@ -12,7 +12,7 @@ resource "azurerm_virtual_network" "this" {
 }
 resource "azurerm_subnet" "public" {
   name                 = "${var.name}-public-subnet"
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = azurerm_resource_group.rg1.name
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = [cidrsubnet(var.address_space, 8, 1)]
 }

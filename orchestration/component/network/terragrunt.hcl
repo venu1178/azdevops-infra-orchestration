@@ -40,10 +40,6 @@ terraform {
 provider "azurerm" {
   features {}
 }
-provider "azuredevops" {
-  personal_access_token = get_env("PAT")
-  org_service_url =  get_env("ADO_ORGANIZATION")
-}
 
 EOF
 }

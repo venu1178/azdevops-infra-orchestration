@@ -20,7 +20,7 @@ locals {
   config = {
     tenant_id       = local.arm_tenant_id
     subscription_id = local.arm_subscription_id
-    resource_group_name  = local.arm_stacc_rg_name
+    resource_group_name  = "rg_tfstate"
     storage_account_name = local.arm_stacc_name
     container_name       = "tfstate"
     key = "${path_relative_to_include()}/${local.application}-orchestration.tfstate"
