@@ -7,7 +7,8 @@ locals {
   arm_tenant_id       = get_env("ARM_TENANT_ID") 
 }
 
- remote_state {
+ # Remote State Configuration
+remote_state {
   # Disabling since it's causing issues as per
   # https://github.com/gruntwork-io/terragrunt/pull/1317#issuecomment-682041007
   disable_dependency_optimization = true
@@ -20,11 +21,13 @@ locals {
   config = {
     tenant_id       = local.arm_tenant_id
     subscription_id = local.arm_subscription_id
+
     resource_group_name  = "rg_tfstate"
     storage_account_name = local.arm_stacc_name
     container_name       = "tfstate"
-    key = "${path_relative_to_include()}/${local.application}-orchestration.tfstate"
-   // sas_token            = get_env("ARM_SAS_TOKEN")
+
+    key = "${path_relative_from_include()}/orchestration-terraform.tfstate"
+
     snapshot = true
   }
 }

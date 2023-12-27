@@ -1,3 +1,6 @@
+include "root" {
+  path = find_in_parent_folders()
+}
 terraform {
   source = "../../../modules/network"
 
@@ -18,6 +21,8 @@ terraform {
   }
 }
 
+# Generate a special provider.tf to address the generation of dual provider configuration because
+# the vnets are in different subscriptions
 generate "provider" {
   path      = "provider.tf"
   if_exists = "overwrite"
@@ -43,6 +48,4 @@ provider "azurerm" {
 
 EOF
 }
-include {
-  path = find_in_parent_folders()
-}
+
