@@ -55,6 +55,6 @@ stages:
           ${{ if eq(parameters.action, 'Destroy') }}:
             plan_type: '-destroy'
           pool_type: ${{ parameters.pool_type }}
-          log_level: ${{ parameters.terragrunt_log_level }}
+          log_level: ${{ parameters.log_level }}
           component: ${{ parameters.component }}
           environment : ${{parameters.environment}}
