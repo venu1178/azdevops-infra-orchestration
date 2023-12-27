@@ -22,7 +22,7 @@ locals {
     subscription_id = local.arm_subscription_id
     resource_group_name  = local.arm_stacc_rg_name
     storage_account_name = local.arm_stacc_name
-    container_name       = local.arm_container
+    container_name       = "tfstate"
     key = "${path_relative_to_include()}/${local.application}-orchestration.tfstate"
    // sas_token            = get_env("ARM_SAS_TOKEN")
     snapshot = true
