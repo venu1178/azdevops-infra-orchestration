@@ -1,4 +1,5 @@
 locals {
+  global_vars             = read_terragrunt_config(find_in_parent_folders("global.hcl"))
   application             = "azure-orchestration"
   arm_subscription_id = get_env("ARM_SUBSCRIPTION_ID")
   arm_rg_name         = get_env("ARM_RG_NAME") 
