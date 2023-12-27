@@ -52,7 +52,7 @@ remote_state {
   config  = {
     subscription_id      = local.arm_subscription_id
     resource_group_name  = local.arm_stacc_rg_name
-    storage_account_name = local.backend_sa_name
+    storage_account_name = local.arm_stacc_name
     container_name       = local.arm_container
     key                  = "${path_relative_to_include()}/${local.application}.tfstate"
     //sas_token            = get_env("BACKEND_SAS_TOKEN")
