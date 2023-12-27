@@ -5,29 +5,60 @@ locals {
   arm_stacc_name         = get_env("ARM_STACC_NAME")  
   arm_container       = get_env("ARM_CONTAINER_NAME") 
   arm_tenant_id       = get_env("ARM_TENANT_ID") 
+
+  #ADO vars
+  ado_pat_token     = get_env("PAT")
+  organization_name = get_env("ADO_ORGANIZATION")
+  ado_org_url       = "https://dev.azure.com/${local.organization_name}/"
 }
 
+# Generate an Azure provider block
+generate "versions" {
+  path      = "versions.tf"
+  if_exists = "overwrite"
+  contents  = <<EOF
+provider "azurerm" {
+  features {}
+}
+provider "azuredevops" {
+  personal_access_token = "${local.ado_pat_token}"
+  org_service_url =  "${local.ado_org_url}"
+}
+
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">= 3.0.0"
+    }
+    azuredevops = {
+      source = "microsoft/azuredevops"
+      version = ">= 0.3.0"
+    }
+    databricks = {
+      source  = "databricks/databricks"
+      version = "~> 1.0.1"
+    }
+  }
+  required_version = ">= 1.0.0"
+}
+EOF
+}
+
+# Configure Terragrunt to automatically store tfstate files in an S3 bucket
  # Remote State Configuration
 remote_state {
-  # Disabling since it's causing issues as per
-  # https://github.com/gruntwork-io/terragrunt/pull/1317#issuecomment-682041007
-  disable_dependency_optimization = true
-
   backend = "azurerm"
+  config  = {
+    subscription_id      = local.arm_subscription_id
+    resource_group_name  = local.arm_stacc_rg_name
+    storage_account_name = local.backend_sa_name
+    container_name       = local.arm_container
+    key                  = "${path_relative_to_include()}/${local.application}.tfstate"
+    //sas_token            = get_env("BACKEND_SAS_TOKEN")
+  }
   generate = {
     path      = "backend.tf"
     if_exists = "overwrite"
-  }
-  config = {
-    tenant_id       = "7d3e6cf2-4803-4532-8f1e-708727a21dc2"
-    subscription_id = "d4efdad9-9532-492e-87c7-ae99a9fcce15"
-
-    resource_group_name  = "rg_tfstate"
-    storage_account_name = "orchestrationtfstate"
-    container_name       = "terraformstate"
-
-    key = "${path_relative_from_include()}/terraform.tfstate"
-
-    snapshot = true
   }
 }
