@@ -49,3 +49,7 @@ provider "azurerm" {
 EOF
 }
 
+include  {
+  path = find_in_parent_folders()
+}
+

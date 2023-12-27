@@ -22,9 +22,9 @@ remote_state {
     tenant_id       = local.arm_tenant_id
     subscription_id = local.arm_subscription_id
 
-    resource_group_name  = "rg_tfstate"
+    resource_group_name  = local.arm_stacc_rg_name
     storage_account_name = local.arm_stacc_name
-    container_name       = "tfstate"
+    container_name       = "terraformstate"
 
     key = "${path_relative_from_include()}/orchestration-terraform.tfstate"
 
