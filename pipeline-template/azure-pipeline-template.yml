@@ -20,7 +20,7 @@ stages:
     displayName: 'Validate - ${{ parameters.component }}'
     variables:
       - template: env-dev-config.yml
-    ${{ if eq(parameters.pool_type, 'MS_Hosted')) }}:
+    ${{ if eq(parameters.pool_type, 'MS_Hosted') }}:
       pool:
         vmImage: 'ubuntu-latest'
     ${{ else }}:
