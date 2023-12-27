@@ -7,7 +7,7 @@ locals {
   arm_tenant_id       = get_env("ARM_TENANT_ID") 
 }
 
- emote_state {
+ remote_state {
   # Disabling since it's causing issues as per
   # https://github.com/gruntwork-io/terragrunt/pull/1317#issuecomment-682041007
   disable_dependency_optimization = true
