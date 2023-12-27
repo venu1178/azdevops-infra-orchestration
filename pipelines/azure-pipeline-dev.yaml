@@ -44,4 +44,4 @@ stages:
       service_principal_identifier: ${{ variables.service_principal_identifier }}
       component: "${{ replace(parameters.component, '-', '_') }}"
       pool_type: ${{ variables.pool_type }}
-      terragrunt_log_level: ${{ parameters.log_level }}
+      log_level: ${{ parameters.log_level }}
