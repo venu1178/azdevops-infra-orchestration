@@ -19,3 +19,4 @@ variable "address_space" {
 
 variable "tags" {
   type        = map(string)
+}
