@@ -18,7 +18,7 @@ parameters:
 jobs:
 - job: Plan
   steps:
-  - template: ../agent-config.yml
+  - template: ./agent-config.yml
     parameters:
       pool_type: ${{ parameters.pool_type }}
       component: ${{ parameters.component }}
