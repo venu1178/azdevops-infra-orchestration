@@ -19,14 +19,14 @@ remote_state {
     if_exists = "overwrite"
   }
   config = {
-    tenant_id       = local.arm_tenant_id
-    subscription_id = local.arm_subscription_id
+    tenant_id       = "7d3e6cf2-4803-4532-8f1e-708727a21dc2"
+    subscription_id = "d4efdad9-9532-492e-87c7-ae99a9fcce15"
 
-    resource_group_name  = local.arm_stacc_rg_name
-    storage_account_name = local.arm_stacc_name
+    resource_group_name  = "rg_tfstate"
+    storage_account_name = "orchestrationtfstate"
     container_name       = "terraformstate"
 
-    key = "${path_relative_from_include()}/orchestration-terraform.tfstate"
+    key = "${path_relative_from_include()}/terraform.tfstate"
 
     snapshot = true
   }
