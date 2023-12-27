@@ -1,14 +1,14 @@
 variables:
   - name: azureHubServiceConnection
-    value: 'cap_osb_manual'
+    value: 'orchestraton_serviceconnetion'
   - name: azureDeploymentSubscriptionServiceConnection
-    value: 'cap_osb_manual'
+    value: 'orchestraton_serviceconnetion'
   - name: backendServiceArm
-    value: 'cap_osb_manual'
+    value: 'orchestraton_serviceconnetion'
   - name: backendAzureRmResourceGroupName
     value: rg_tfstate
   - name: backendAzureRmStorageAccountName
-    value: venutfstate
+    value: orchestrationtfstate
   - name: backendAzureRmContainerName
     value: terraformstate
   - name: agentPool
