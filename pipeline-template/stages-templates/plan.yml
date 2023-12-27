@@ -24,7 +24,7 @@ jobs:
       component: ${{ parameters.component }}
       environment: ${{parameters.environment}}
 
-  - template: ./print-env-variables.yaml
+  - template: ./print-env-variables.yml
 
   - task: Bash@3
     displayName: "Terragrunt Plan"
@@ -46,4 +46,4 @@ jobs:
       artifact: '${{ parameters.component }}'
       publishLocation: 'pipeline'
 
-  - template: ./cleanup.yaml
+  - template: ./cleanup.yml
