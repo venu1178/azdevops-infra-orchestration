@@ -8,4 +8,4 @@ parameters:
 
 steps:
 - checkout: self
-- template: ./agent-config.yml
+- template: ./agent-login.yml
