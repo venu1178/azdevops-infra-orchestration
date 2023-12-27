@@ -55,7 +55,7 @@ remote_state {
     storage_account_name = local.arm_stacc_name
     container_name       = local.arm_container
     key                  = "${path_relative_to_include()}/${local.application}.tfstate"
-    //sas_token            = get_env("ARM_SAS_TOKEN")
+    sas_token            = get_env("ARM_SAS_TOKEN")
   }
   generate = {
     path      = "backend.tf"
