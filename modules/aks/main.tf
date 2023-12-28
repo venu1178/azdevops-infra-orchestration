@@ -43,10 +43,10 @@ resource "time_sleep" "wait_30_seconds" {
 }
 
 
-resource "azurerm_role_assignment" "this" {
+/* resource "azurerm_role_assignment" "this" {
   principal_id                     = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
   role_definition_name             = "AcrPull"
   scope                            = var.acr_resource_id
  # scope                            = data.azurerm_container_registry.this.id
   skip_service_principal_aad_check = true
-}
+} */
