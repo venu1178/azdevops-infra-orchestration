@@ -15,6 +15,7 @@ variable "kubernetes_version" {
 }
 variable "vm_size" {
   type        = string
+  default = "Standard_D2_v2"
   description = "Resource group object for this consumable. If not set, a new one is created."
 
   default = null
