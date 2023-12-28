@@ -1,0 +1,18 @@
+parameters:
+  - name: environment
+    type: string
+
+jobs:
+  - deployment: 'ManualApproval'
+    environment: 'InfraApproval'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: ManualValidation@0
+              displayName: Validate Deployment
+              timeoutInMinutes: 30
+              inputs:
+                notifyUsers: ""
+                instructions: Please validate the deploy/ destroy configuration and resume to deploy or destroy the infra
+                onTimeout: reject
