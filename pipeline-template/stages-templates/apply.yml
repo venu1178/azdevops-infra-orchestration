@@ -27,7 +27,7 @@ jobs:
       component: ${{ parameters.component }}
       environment: ${{parameters.environment}}
 
-  - template: ./print-env-variables.yaml
+  - template: ./print-env-variables.yml
 
   - task: DownloadPipelineArtifact@2
     displayName: Download Pipeline Artifacts
@@ -49,4 +49,4 @@ jobs:
       ARM_SUBSCRIPTION_ID: $(${{ parameters.service_principal_identifier }}_SUBSCRIPTION_ID)
       ARM_TENANT_ID: $(ARM_TENANT_ID)
 
-  - template: ./cleanup.yaml
+  - template: ./cleanup.yml
