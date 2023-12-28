@@ -104,7 +104,7 @@ stages:
           environment: ${{ parameters.environment }}
 
   - stage: 'Destroy_${{ parameters.component }}'
-    displayName: 'Deploy - ${{ parameters.component }}'
+    displayName: 'Destroy - ${{ parameters.component }}'
     variables:
       - template: env-dev-config.yml
     ${{ if eq(parameters.pool_type, 'MS_Hosted') }}:
