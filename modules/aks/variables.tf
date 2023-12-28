@@ -11,7 +11,7 @@ variable "admin_username" {
 
 
 variable "kubernetes_version" {
- 
+  default = "1.26"
 }
 variable "vm_size" {
   type        = string
