@@ -112,7 +112,7 @@ stages:
         vmImage: 'ubuntu-latest'
     ${{ else }}:
       pool: ${{ variables.agentPool }}
-    dependsOn: 'Approve_Deployment_${{ parameters.component }}'
+    dependsOn: 'Approve_Destroy_${{ parameters.component }}'
     condition: and(in(dependencies.Approve_Deployment_${{ parameters.component }}.result, 'Succeeded'), eq('${{ parameters.action }}', 'Destroy'), eq(variables['isDeploymentBranch'], 'true'))
     jobs:
       - template: ./stages-templates/apply.yml
