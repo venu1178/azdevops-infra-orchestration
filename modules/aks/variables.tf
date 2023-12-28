@@ -26,11 +26,11 @@ variable "acr_resource_id" {
 }
 
 variable "acr_name" {
-  default = "acr"
+  default = "acreg"
 }
 
 variable "name" {
-  default = "aks"
+  default = "akser"
 }
 
 
