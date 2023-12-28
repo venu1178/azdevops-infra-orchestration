@@ -1,6 +1,6 @@
-dependency "acr" {
-  config_path = "../acr"
-}
+#dependency "acr" {
+#  config_path = "../acr"
+#}
 
 terraform {
   source = "../../../modules/aks"
