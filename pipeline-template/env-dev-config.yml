@@ -18,7 +18,7 @@ variables:
   - name: serviceCodeDir
     value: 'serviceCode'
   - name: isDeploymentBranch
-    value: 'false'
+    value: 'true'
   - ${{ if or(startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'), startsWith(variables['Build.SourceBranch'], 'refs/heads/hotfix/'), in(variables['Build.SourceBranchName'], 'main','release')) }}:
       - name: isDeploymentBranch
         value: 'true'

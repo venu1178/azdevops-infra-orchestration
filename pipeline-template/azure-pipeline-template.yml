@@ -62,7 +62,7 @@ stages:
     variables:
       - template: env-dev-config.yml
     displayName: 'Approve Deployment - ${{ parameters.component }}'
-    condition: and(in(dependencies.Plan_${{ parameters.component }}.result, 'Succeeded'), eq('${{ parameters.action }}', 'Deploy the infrastructure'), eq(variables['isDeploymentBranch'], 'true'))
+    condition: and(in(dependencies.Plan_${{ parameters.component }}.result, 'Succeeded'), eq('${{ parameters.action }}', 'Deploy'), eq(variables['isDeploymentBranch'], 'true'))
     dependsOn: 'Plan_${{ parameters.component }}'
     pool: server
     jobs:
