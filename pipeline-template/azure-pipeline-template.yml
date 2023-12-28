@@ -68,4 +68,25 @@ stages:
     jobs:
       - template: ./stages-templates/manual-approval.yml
         parameters:
-          environment: ${{ parameters.environment }}          
+          environment: ${{ parameters.environment }}
+
+  - stage: 'Apply_${{ parameters.component }}'
+    displayName: 'Deploy - ${{ parameters.component }}'
+    variables:
+      - template: env-dev-config.yml
+    ${{ if eq(parameters.pool_type, 'MS_Hosted') }}:
+      pool:
+        vmImage: 'ubuntu-latest'
+    ${{ else }}:
+      pool: ${{ variables.agentPool }}
+    dependsOn: 'Approve_Deployment_${{ parameters.component }}'
+    condition: and(in(dependencies.Approve_Deployment_${{ parameters.component }}.result, 'Succeeded'), eq('${{ parameters.action }}', 'Deploy'), eq(variables['isDeploymentBranch'], 'true'))
+    jobs:
+      - template: ./stages-templates/apply.yml
+        parameters:
+          codebase: ${{ parameters.terragrunt_codebase }}
+          service_principal_identifier: ${{ parameters.service_principal_identifier }}
+          pool_type: ${{ parameters.pool_type }}
+          log_level: ${{ parameters.terragrunt_log_level }}
+          component: ${{ parameters.component }}
+          environment : ${{parameters.environment}}

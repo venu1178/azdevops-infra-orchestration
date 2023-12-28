@@ -1,0 +1,52 @@
+# ---------------------------------------------------------------------------------------------------------------------
+# Template for provision the resources using 'terragrunt apply'
+# ---------------------------------------------------------------------------------------------------------------------
+
+parameters:
+- name: codebase
+  type: string
+- name: service_principal_identifier
+  type: string
+- name: pool_type
+  type: string
+- name: log_level
+  type: string
+- name: component
+  type: string
+- name: environment
+  type: string
+  default: ''
+
+jobs:
+- job: Apply
+  timeoutInMinutes: 120
+  steps:
+  - template: ./setup.yml
+    parameters:
+      pool_type: ${{ parameters.pool_type }}
+      component: ${{ parameters.component }}
+      environment: ${{parameters.environment}}
+
+  - template: ./print-env-variables.yaml
+
+  - task: DownloadPipelineArtifact@2
+    displayName: Download Pipeline Artifacts
+    inputs:
+      buildType: 'current'
+      targetPath: '$(Pipeline.Workspace)'
+
+  - task: Bash@3
+    displayName: "Terragrunt Apply"
+    inputs:
+      targetType: 'inline'
+      script: '/usr/local/bin/terragrunt apply $(Pipeline.Workspace)/${{ parameters.component }}/${{ parameters.component }}.tfplan'
+      workingDirectory: '$(Build.SourcesDirectory)/${{ codebase }}'
+    env:
+      BACKEND_SAS_TOKEN: $(ARM_SAS_TOKEN)
+      SYSTEM_ACCESSTOKEN: $(PAT)
+      ARM_CLIENT_SECRET: $(${{ parameters.service_principal_identifier }}_CLIENT_SECRET)
+      ARM_CLIENT_ID: $(${{ parameters.service_principal_identifier }}_CLIENT_ID)
+      ARM_SUBSCRIPTION_ID: $(${{ parameters.service_principal_identifier }}_SUBSCRIPTION_ID)
+      ARM_TENANT_ID: $(ARM_TENANT_ID)
+
+  - template: ./cleanup.yaml
