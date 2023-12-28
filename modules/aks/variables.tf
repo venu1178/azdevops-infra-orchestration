@@ -1,5 +1,5 @@
 variable "resource_group" {
-    default "rg_aks"
+    default = "rg_aks"
 }
 variable "agent_count" {
   default = 2
@@ -58,7 +58,7 @@ variable "resource_group_name" {
 }
 
 variable "acrname" {
-  default     = "acr"
+  default     = "acreguk"
  
 }
 
