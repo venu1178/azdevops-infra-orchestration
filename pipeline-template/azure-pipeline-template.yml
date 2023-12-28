@@ -90,3 +90,36 @@ stages:
           log_level: ${{ parameters.log_level }}
           component: ${{ parameters.component }}
           environment : ${{parameters.environment}}
+
+  - stage: 'Approve_Destroy_${{ parameters.component }}'
+    variables:
+      - template: env-dev-config.yml
+    displayName: 'Approve Destroy - ${{ parameters.component }}'
+    condition: and(in(dependencies.Plan_${{ parameters.component }}.result, 'Succeeded'), eq('${{ parameters.action }}', 'Destroy'), eq(variables['isDeploymentBranch'], 'true'))
+    dependsOn: 'Plan_${{ parameters.component }}'
+    pool: server
+    jobs:
+      - template: ./stages-templates/manual-approval.yml
+        parameters:
+          environment: ${{ parameters.environment }}
+
+  - stage: 'Destroy_${{ parameters.component }}'
+    displayName: 'Deploy - ${{ parameters.component }}'
+    variables:
+      - template: env-dev-config.yml
+    ${{ if eq(parameters.pool_type, 'MS_Hosted') }}:
+      pool:
+        vmImage: 'ubuntu-latest'
+    ${{ else }}:
+      pool: ${{ variables.agentPool }}
+    dependsOn: 'Approve_Deployment_${{ parameters.component }}'
+    condition: and(in(dependencies.Approve_Deployment_${{ parameters.component }}.result, 'Succeeded'), eq('${{ parameters.action }}', 'Destroy'), eq(variables['isDeploymentBranch'], 'true'))
+    jobs:
+      - template: ./stages-templates/apply.yml
+        parameters:
+          codebase: ${{ parameters.codebase }}
+          service_principal_identifier: ${{ parameters.service_principal_identifier }}
+          pool_type: ${{ parameters.pool_type }}
+          log_level: ${{ parameters.log_level }}
+          component: ${{ parameters.component }}
+          environment : ${{parameters.environment}}
