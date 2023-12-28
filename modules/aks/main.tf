@@ -38,13 +38,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
 
 resource "time_sleep" "wait_30_seconds" {
-  depends_on = [azurerm_kubernetes_cluster.this]
+  depends_on = [azurerm_kubernetes_cluster.aks]
   create_duration = "30s"
 }
 
 
 resource "azurerm_role_assignment" "this" {
-  principal_id                     = azurerm_kubernetes_cluster.this.kubelet_identity[0].object_id
+  principal_id                     = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
   role_definition_name             = "AcrPull"
   scope                            = var.acr_resource_id
  # scope                            = data.azurerm_container_registry.this.id
