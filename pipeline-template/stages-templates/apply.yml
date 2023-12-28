@@ -40,7 +40,7 @@ jobs:
     inputs:
       targetType: 'inline'
       script: '/usr/local/bin/terragrunt apply $(Pipeline.Workspace)/${{ parameters.component }}/${{ parameters.component }}.tfplan'
-      workingDirectory: '$(Build.SourcesDirectory)/${{ codebase }}'
+      workingDirectory: '$(Build.SourcesDirectory)/${{ parameters.codebase }}'
     env:
       BACKEND_SAS_TOKEN: $(ARM_SAS_TOKEN)
       SYSTEM_ACCESSTOKEN: $(PAT)
