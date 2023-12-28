@@ -113,7 +113,7 @@ stages:
     ${{ else }}:
       pool: ${{ variables.agentPool }}
     dependsOn: 'Approve_Destroy_${{ parameters.component }}'
-    condition: and(in(dependencies.Approve_Deployment_${{ parameters.component }}.result, 'Succeeded'), eq('${{ parameters.action }}', 'Destroy'), eq(variables['isDeploymentBranch'], 'true'))
+    condition: and(in(dependencies.Approve_Destroy_${{ parameters.component }}.result, 'Succeeded'), eq('${{ parameters.action }}', 'Destroy'), eq(variables['isDeploymentBranch'], 'true'))
     jobs:
       - template: ./stages-templates/apply.yml
         parameters:
